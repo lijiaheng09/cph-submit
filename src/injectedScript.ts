@@ -14,6 +14,10 @@ const isContestProblem = (problemUrl: string) => {
     return problemUrl.indexOf('contest') != -1;
 };
 
+export const isGymProblem = (problemUrl: string) => {
+    return problemUrl.indexOf('gym') != -1;
+};
+
 const handleData = (data: ContentScriptData) => {
     log('Handling submit message');
     const languageEl = document.getElementsByName(
@@ -26,7 +30,7 @@ const handleData = (data: ContentScriptData) => {
     sourceCodeEl.value = data.sourceCode;
     languageEl.value = data.languageId.toString();
 
-    if (!isContestProblem(data.url)) {
+    if (!isContestProblem(data.url) && !isGymProblem(data.url)) {
         const problemNameEl = document.getElementsByName(
             'submittedProblemCode',
         )[0] as HTMLInputElement;

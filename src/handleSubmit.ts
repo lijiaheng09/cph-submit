@@ -12,7 +12,17 @@ export const isContestProblem = (problemUrl: string) => {
     return problemUrl.indexOf('contest') != -1;
 };
 
+export const isGymProblem = (problemUrl: string) => {
+    return problemUrl.indexOf('gym') != -1;
+};
+
 export const getSubmitUrl = (problemUrl: string) => {
+    if (isGymProblem(problemUrl)) {
+        const url = new URL(problemUrl);
+        const gymNumber = url.pathname.split('/')[2];
+        const submitURL = `https://codeforces.com/gym/${gymNumber}/submit`;
+        return submitURL;
+    }
     if (!isContestProblem(problemUrl)) {
         return config.cfSubmitPage.href;
     }
